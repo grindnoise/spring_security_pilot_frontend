@@ -26,13 +26,12 @@ export class LoginComponent implements OnInit {
     validateUser(loginForm: NgForm) {
         this.loginService.validateLoginDetails(this.model).subscribe(
             responseData => {
-                // Capture and save Authorization header (for example, JWT token). We'll use it later in interceptor
-                window.sessionStorage.setItem("Authorization", responseData.headers.get("Authorization")!)
-                this.model = <any>responseData.body;
+                window.sessionStorage.setItem("Authorization",responseData.headers.get('Authorization')!);
+                this.model = <any> responseData.body;
                 this.model.authStatus = 'AUTH';
-                window.sessionStorage.setItem("userdetails", JSON.stringify(this.model));
-                let token = getCookie("XSRF-TOKEN");
-                window.sessionStorage.setItem("XSRF-TOKEN", token!);
+                window.sessionStorage.setItem("userdetails",JSON.stringify(this.model));
+                let xsrf = getCookie('XSRF-TOKEN')!;
+                window.sessionStorage.setItem("XSRF-TOKEN",xsrf);
                 this.router.navigate(['dashboard']);
             });
 
